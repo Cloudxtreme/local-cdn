@@ -1,0 +1,1 @@
+(function(){var a={toString:function(){return"Bar"}},b={toString:function(){return"Baz"}},c={toString:function(){return"Foo"}}})()
