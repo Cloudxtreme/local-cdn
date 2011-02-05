@@ -1,0 +1,16 @@
+{
+    "dir": ".",
+    "js": {
+        "prod.js": [
+            "js/foo.js",
+            "js/bar.js",
+            "js/baz.js"
+        ],
+        "dev.js": [
+            "js/foo.js",
+            "js/bar.js",
+            "js/baz.js",
+            "js/debug.js"
+        ]
+    }
+}
