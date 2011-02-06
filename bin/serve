@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Usage: serve <static-dir> <port> [--compress]
+// Usage: serve <config-file> <port> [--compress]
 
 var args = process.argv;
 
