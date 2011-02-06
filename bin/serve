@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// Usage: serve <static-dir> <port> [--compress]
+
 var args = process.argv;
 
 var cdn = require('../index');
