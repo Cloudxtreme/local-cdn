@@ -10,5 +10,8 @@
   },
   "engines": {
     "node": "2.6"
+  },
+  "dependencies" : {
+      "mime" : ">=1.2.1"
   }
 }
