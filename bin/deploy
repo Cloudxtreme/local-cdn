@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+// Usage: deploy <config-file> [--no-compress]
+
