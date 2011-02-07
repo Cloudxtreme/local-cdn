@@ -26,7 +26,11 @@ exports.serve = function(config) {
         }
         
         content = builder.combine(type, files);
-        // content = builder.compress(type, content);
+        
+        if (config.compress) {
+            content = builder.compress(type, content);
+        }
+        
         writeResponse(res, content, contentType);
     }
 }
