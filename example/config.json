@@ -3,15 +3,19 @@
     "deployDir": "../deploy",
     "js": {
         "prod.js": [
-            "js/foo.js",
-            "js/bar.js",
-            "js/baz.js"
-        ],
-        "dev.js": [
+            "js/pre.js",
             "js/foo.js",
             "js/bar.js",
             "js/baz.js",
-            "js/debug.js"
+            "js/post.js"
+        ],
+        "dev.js": [
+            "js/pre.js",
+            "js/foo.js",
+            "js/bar.js",
+            "js/baz.js",
+            "js/debug.js",
+            "js/post.js"
         ]
     },
     "css": {

@@ -15,9 +15,7 @@
 * The copyrights embodied in the content of this file are licensed
 * by Yahoo! Inc. under the BSD (revised) open source license.
 */
-var YAHOO = YAHOO || {};
-YAHOO.compressor = YAHOO.compressor || {};
-YAHOO.compressor.cssmin = function (css, linebreakpos){
+exports.compress = function (css, linebreakpos){
 
     var startIndex = 0, 
         endIndex = 0,

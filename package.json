@@ -12,6 +12,8 @@
     "node": "2.6"
   },
   "dependencies" : {
-      "mime" : ">=1.2.1"
+      "mime" : ">=1.2.1",
+      "connect": ">=0.5.8",
+      "uglify-js": "*"
   }
 }

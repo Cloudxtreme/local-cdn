@@ -1,3 +1,38 @@
-exports.server = require('./lib/server');
-exports.deploy = require('./lib/deploy');
-exports.config = require('./lib/config');
+var url = require('url');
+var mime = require('mime');
+
+var config = require('./lib/config');
+var builder = require('./lib/builder');
+
+function writeResponse(response, content, contentType) {
+    contentType = contentType || 'text/html';
+    
+    response.writeHead(200, {'Content-Type': contentType});
+    response.end(content);
+};
+
+exports.serve = function(config) {
+    return function(req, res, next) {
+        var parts = url.parse(req.url).pathname.split('/'),
+            contentType = mime.lookup(req.url),
+            type = parts[1],
+            bundleName = parts[2],
+            files = config.getFiles(type, bundleName),
+            content;
+            
+        if (! files) {
+            next();
+            return;
+        }
+        
+        content = builder.combine(type, files);
+        // content = builder.compress(type, content);
+        writeResponse(res, content, contentType);
+    }
+}
+
+exports.deploy = function(config) {
+    
+}
+
+exports.config = config;
