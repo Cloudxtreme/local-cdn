@@ -1,4 +1,5 @@
 var url = require('url');
+var fs = require('fs');
 var mime = require('mime');
 
 var config = require('./lib/config');
@@ -36,7 +37,17 @@ exports.serve = function(config) {
 }
 
 exports.deploy = function(config) {
+    var dir = config.deployDir;
     
+    try {
+        fs.statSync(dir);
+    } catch (e) {
+        fs.mkdirSync(dir, 0755);
+    }
+    
+    var js = config.js;
+    
+    // TODO create all js and css bundles, copy everything else
 }
 
 exports.config = config;
