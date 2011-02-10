@@ -39,15 +39,36 @@ exports.serve = function(config) {
 exports.deploy = function(config) {
     var dir = config.deployDir;
     
+    console.log("dir = " + dir);
+    
     try {
         fs.statSync(dir);
     } catch (e) {
         fs.mkdirSync(dir, 0755);
     }
     
-    var js = config.js;
+    var files, bundle, content;
     
-    // TODO create all js and css bundles, copy everything else
+    var js = config.getBundles('js');
+    
+    for (bundle in js) {
+        
+        files = config.getFiles('js', bundle);
+        
+        if (! files) { continue; }
+        
+        content = builder.combine('js', files);
+        
+        if (config.compress) {
+            content = builder.compress('js', content);
+        }
+        
+        console.log(dir + bundle);
+        
+        fs.writeFileSync(dir + bundle, content, 'utf-8');
+    }
+    
+    var css = config.css;
 }
 
 exports.config = config;
