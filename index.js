@@ -39,7 +39,7 @@ exports.serve = function(config) {
 exports.deploy = function(config) {
     var dir = config.deployDir;
     
-    console.log("dir = " + dir);
+    // create the deploy dir if it doesn't exist
     
     try {
         fs.statSync(dir);
@@ -47,28 +47,40 @@ exports.deploy = function(config) {
         fs.mkdirSync(dir, 0755);
     }
     
-    var files, bundle, content;
+    // first go through and create all the bundles
     
-    var js = config.getBundles('js');
+    var types = ['js','css'],
+        type,
+        files,
+        bundles,
+        bundle,
+        content,
+        i;
     
-    for (bundle in js) {
+    for (i = 0; i < types.length; i++) {
+        type = types[i];
+        bundles = config.getBundles(type);
         
-        files = config.getFiles('js', bundle);
-        
-        if (! files) { continue; }
-        
-        content = builder.combine('js', files);
-        
-        if (config.compress) {
-            content = builder.compress('js', content);
+        for (bundle in bundles) {
+            
+            files = config.getFiles(type, bundle);
+            
+            if (! files) { continue; }
+            
+            content = builder.combine(type, files);
+            
+            if (config.compress) {
+                content = builder.compress(type, content);
+            }
+            
+            fs.writeFileSync(dir + bundle, content, 'utf-8');
         }
-        
-        console.log(dir + bundle);
-        
-        fs.writeFileSync(dir + bundle, content, 'utf-8');
     }
     
-    var css = config.css;
+    // then go through and copy the individual static assets
+    
+    // TODO recursive copy and mkdir
+    
 }
 
 exports.config = config;
