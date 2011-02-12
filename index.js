@@ -39,6 +39,10 @@ exports.serve = function(config) {
 exports.deploy = function(config) {
     var dir = config.deployDir;
     
+    // collect a listing of the file structure and files in the static dir,
+    // removing any files that are part of the bundles
+    
+    
     // create the deploy dir if it doesn't exist
     
     try {
@@ -77,9 +81,8 @@ exports.deploy = function(config) {
         }
     }
     
-    // then go through and copy the individual static assets
-    
-    // TODO recursive copy and mkdir
+    // then go through and copy the remaining individual static assets, creating
+    // the sub directories as needed
     
 }
 
