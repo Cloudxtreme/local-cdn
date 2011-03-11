@@ -36,7 +36,7 @@ config.compress = compress;
 var server = connect.createServer(
     connect.logger({ format: ':method :url :response-time => :status'}),
     cdn.serve(config),
-    connect.staticProvider(config.staticDir)
+    connect.static(config.staticDir)
 );
 
 server.listen(port);

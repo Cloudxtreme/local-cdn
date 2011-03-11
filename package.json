@@ -9,11 +9,11 @@
     "lib": "lib"
   },
   "engines": {
-    "node": "2.6"
+    "node": ">=2.6"
   },
   "dependencies" : {
       "mime" : ">=1.2.1",
-      "connect": ">=0.5.8",
+      "connect": ">=1.0.0",
       "uglify-js": "*"
   }
 }
