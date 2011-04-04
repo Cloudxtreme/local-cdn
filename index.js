@@ -1,6 +1,7 @@
 var url = require('url');
 var fs = require('fs');
 var mime = require('mime');
+var glob = require('glob');
 
 var config = require('./lib/config');
 var builder = require('./lib/builder');
@@ -38,10 +39,6 @@ exports.serve = function(config) {
 
 exports.deploy = function(config) {
     var dir = config.deployDir;
-    
-    // collect a listing of the file structure and files in the static dir,
-    // removing any files that are part of the bundles
-    
     
     // create the deploy dir if it doesn't exist
     
@@ -81,9 +78,32 @@ exports.deploy = function(config) {
         }
     }
     
+    // collect a listing of the file structure and files in the static dir,
+    // removing any files that are part of the bundles
+    var root = config.staticDir;
+    var files = glob.globSync(root + '**', glob.GLOB_NO_DOTDIRS|glob.GLOB_STAR);
+    var stat;
+    var srcPath
+    var destPath;
+    
+    // chop off the abs path and leave the paths relative to the root dir so
+    // we can easily replicate the structure in the deploy dir
+    for (i = 0; i < files.length; i++) {
+        srcPath = files[i];
+        destPath = dir + srcPath.substring(root.length);
+        stat = fs.statSync(srcPath);
+        
+        if (stat.isDirectory()) {
+            fs.mkdirSync(destPath, 0755);
+        } else if (stat.isFile()) {
+            fs.writeFileSync(destPath, fs.readFileSync(srcPath), 'utf-8');
+        }
+    }
+    
+    console.log(files);
+    
     // then go through and copy the remaining individual static assets, creating
     // the sub directories as needed
-    
 }
 
 exports.config = config;
