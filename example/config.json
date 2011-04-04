@@ -1,5 +1,5 @@
 {
-    "staticDir": ".",
+    "staticDir": "public",
     "deployDir": "../deploy",
     "js": {
         "prod.js": [
