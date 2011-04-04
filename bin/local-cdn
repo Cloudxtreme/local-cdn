@@ -3,7 +3,7 @@
 // Usage: local-cdn <serve|deploy> <config-file> [port] [--compress]
 
 var connect = require('connect');
-var cdn = require('../index');
+var cdn = require('local-cdn');
 
 /**
  * arg list:
