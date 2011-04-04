@@ -14,6 +14,7 @@
   "dependencies" : {
       "mime" : ">=1.2.1",
       "connect": ">=1.0.0",
-      "uglify-js": "*"
+      "uglify-js": ">=1.0.0",
+      "glob": ">=2.0.6"
   }
 }

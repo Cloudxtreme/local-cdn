@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+
+// Usage: local-cdn <serve|deploy> <config-file> [port] [--compress]
+
+var connect = require('connect');
+var cdn = require('../index');
+
+/**
+ * arg list:
+ * 0 - node
+ * 1 - local-cdn
+ * 2 - serve
+ * 3 - config-file
+ */
+var args = process.argv;
+
+if (args.length < 3) {
+    console.log("Usage: local-cdn <serve|deploy> <config-file> [port] [--compress]");
+}
+
+var compress = args.indexOf('--compress');
+
+if (compress > -1) {
+    args.splice(compress, 1);
+    compress = true;
+} else {
+    compress = false;
+}
+
+var configFilePath = args[3];
+var port = args[4] || 8000;
+
+var config = cdn.config.fromFileSync(configFilePath);
+
+config.compress = compress;
+
+var command = args[2].toLowerCase();
+
+if (command === 'deploy') {
+    cdn.deploy(config);
+} else if (command === 'serve') {
+    var server = connect.createServer(
+        connect.logger({ format: ':method :url :response-time => :status'}),
+        cdn.serve(config),
+        connect.static(config.staticDir)
+    );
+    
+    server.listen(port);
+    
+    console.log("Server started on http://localhost:" + port + "/ ...");
+}
