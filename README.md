@@ -40,8 +40,7 @@ local-cdn requires a config file. It's a json formatted file that looks like thi
         },
         "css": {
             "site.css": [
-                "css/reset.css",
-                "css/widget.css"
+                "css/*.css"
             ]
         }
     }
@@ -50,6 +49,8 @@ local-cdn requires a config file. It's a json formatted file that looks like thi
 * deployDir : a relative (or absolute) path that will be created for generating deployment bundles.
 * js : an object with String => Array key/value pairs, describing each javascript bundle name and its source files.
 * css : an object with String => Array key/value pairs, describing each css bundle name and its source files.
+
+(Glob style wildcard strings are supported for the file paths that make up each bundle.)
 
 ### Run Standalone
 

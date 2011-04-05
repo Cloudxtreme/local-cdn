@@ -20,8 +20,7 @@
     },
     "css": {
         "prod.css": [
-            "css/site.css",
-            "css/widget.css"
+            "css/*.css"
         ]
     }
 }
