@@ -14,7 +14,9 @@ exports.serve = function(config) {
             type = parts[1],
             bundleName = parts[2],
             files = config.getFiles(type, bundleName),
-            content;
+            content,
+            extra,
+            i;
             
         if (! files) {
             next();
@@ -22,6 +24,16 @@ exports.serve = function(config) {
         }
         
         content = builder.combine(type, files);
+        
+        for (i = 0; i < config.extras; i++) {
+            extra = config.extras[i];
+            
+            if (typeof extra !== 'function') {
+                continue;
+            }
+            
+            content = extra(type, content);
+        }
         
         if (config.compress) {
             content = builder.compress(type, content);
