@@ -87,3 +87,29 @@ local-cdn can be used with Connect just like any other middleware.
 This is exactly what the [bin/local-cdn](https://github.com/larrymyers/local-cdn/blob/master/bin/local-cdn) 
 script does that is used in standalone mode, and serves as a good reference implementation.
 
+## Extending local-cdn
+
+To add additional processing steps to local-cdn, the BuildConfig class exposes an _extras_ array.
+
+Each extra processing step added is just a plain javascript function that takes two args:
+
+* type - A string value containing the type of content being passed. Currently this is 'js' or 'css'.
+* content - The concatenated text contents of the bundle being generated.
+
+The extra processing step is expected to return the processed content.
+
+A simple example that adds a copyright header to each bundle:
+
+    var localcdn = require('local-cdn');
+    
+    var config = localcdn.config.fromFileSync('path/to/project/local-cdn.config');
+    
+    config.extras.push(function(type, content) {
+        return "/** Copyright (c) 2011 Acme Corp **/" + content;
+    });
+    
+    var server = connect.createServer(
+        connect.logger({ format: ':method :url :response-time => :status'}),
+        localcdn.serve(config)
+    );
+
